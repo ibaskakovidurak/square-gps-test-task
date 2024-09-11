@@ -20,7 +20,7 @@ export const getMarkers = async ({ commit }) => {
     commit('setMarkers', { markers:  data })
 
     return new Promise(resolve =>
-        setTimeout(() => resolve(data), 1000)
+        setTimeout(() => resolve(data), 200)
     )
 }
 

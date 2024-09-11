@@ -23,6 +23,7 @@
       class="d-flex justify-end position-relative"
     >
       <v-btn
+        :disabled="editing"
         icon="mdi-plus"
         size="large"
         :base-color="editing ? 'orange' : 'blue'"

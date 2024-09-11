@@ -27,6 +27,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { useStore } from 'vuex'
 import {
   YandexMap,
@@ -48,6 +49,7 @@ const colors = {
   default: import.meta.env.VITE_BALOON_COLOR_DEFAULT,
   active: import.meta.env.VITE_BALOON_COLOR_ACTIVE,
 }
+const debouncing = ref(true)
 
 
 /**
@@ -68,14 +70,19 @@ const addMarker = async (coords) => {
  * @return {(function(*, *): Promise<void>)|*}
  */
 const mapClick = (category, type) => {
-  if (typeof type !== 'boolean' && props.editing === true) {
+  if (typeof type !== 'boolean' && props.editing === true && debouncing.value === true) {
     return async (object, event) => {
       if (object?.type !== 'marker') {
+        debouncing.value = false
         emits('creating')
         await addMarker(event.coordinates)
         emits('addedMarker', true)
         emits('creating')
         emits('created')
+
+        setTimeout(() => {
+          debouncing.value = true
+        }, 500)
       }
     }
   }

@@ -1,0 +1,1 @@
+# square-gps-test-task

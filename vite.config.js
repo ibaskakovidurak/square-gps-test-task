@@ -12,5 +12,19 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  base: '/square-gps-test-task/'
+  base: '/square-gps-test-task/',
+  build: {
+    rollupOptions: {
+      output: {
+        chunkFileNames: chunk => {
+          if (chunk.name === '_plugin-vue_export-helper') {
+            return 'assets/plugin-vue_export-helper-[hash].js'
+          }
+          return 'assets/[name]-[hash].js'
+        },
+        entryFileNames: 'assets/[name]-[hash].js',
+        sourcemapFileNames: 'assets/[name].[hash].js.map',
+      }
+    }
+  }
 })
